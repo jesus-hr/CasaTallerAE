@@ -9,6 +9,12 @@ const swaggerSpec = swaggerJsdoc({
       version: '1.0.0',
       description: 'Documentación de la API',
     },
+    servers: [
+      {
+        url: '/api',
+        description: 'Servidor de API'
+      }
+    ],
   },
   apis: ['./routes/*.js'], // Asegúrate de que esta ruta sea correcta
 });
