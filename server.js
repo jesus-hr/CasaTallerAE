@@ -2,7 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
-const swaggerSpec = require('./swagger'); // Importar Swagger
+const swaggerSpec = require('./swagger'); // Asegúrate de que esta ruta es correcta
 const swaggerUi = require('swagger-ui-express');
 
 // Conectar a la base de datos
@@ -17,9 +17,7 @@ app.use(express.json({ extended: false }));
 // Rutas
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
-/*app.use('/api/productos', require('./routes/producto'));
-app.use('/api/carrito', require('./routes/carrito'));
-app.use('/api/ordenes', require('./routes/orden'));*/
+// Otras rutas...
 
 // Rutas de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
