@@ -1,6 +1,6 @@
 const swaggerJsdoc = require('swagger-jsdoc');
 
-// Configuración de la especificación Swagger
+// Configuración de Swagger
 const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: '3.0.0',
@@ -9,12 +9,6 @@ const swaggerSpec = swaggerJsdoc({
       version: '1.0.0',
       description: 'Documentación de la API',
     },
-    servers: [
-      {
-        url: 'https://casa-taller-ae.vercel.app/',
-        description: 'Servidor de API'
-      }
-    ],
   },
   apis: ['./routes/*.js'], // Asegúrate de que esta ruta sea correcta
 });
