@@ -11,7 +11,7 @@ const swaggerSpec = swaggerJsdoc({
     },
     servers: [
       {
-        url: 'https://casa-taller-ae.vercel.app/api-docs',
+        url: 'https://casa-taller-ae.vercel.app/',
         description: 'Servidor de API'
       }
     ],
