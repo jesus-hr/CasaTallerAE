@@ -1,30 +1,16 @@
 const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
 
-// Configuración de Swagger
-const swaggerOptions = {
+// Configuración de la especificación Swagger
+const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API casatallerae',
+      title: 'API de casatallerae',
       version: '1.0.0',
-      description: 'Documentación de la API para el proyecto casatallerae',
+      description: 'Documentación de la API',
     },
-    servers: [
-      {
-        url: `http://localhost:${process.env.PORT || 3000}`,
-        description: 'Servidor de desarrollo',
-      },
-    ],
   },
-  apis: ['./routes/*.js'], // Ruta a los archivos de rutas para la documentación
-};
+  apis: ['./routes/*.js'], // Asegúrate de que esta ruta sea correcta
+});
 
-// Generar especificaciones Swagger
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
-
-const swaggerDocs = (app) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-};
-
-module.exports = swaggerDocs;
+module.exports = swaggerSpec;

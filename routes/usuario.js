@@ -2,6 +2,33 @@ const router = require("express").Router();
 const { Usuario, validate } = require("../models/usuario");
 const bcryptjs = require("bcryptjs");
 
+/**
+ * @swagger
+ * /api/usuarios:
+ *   post:
+ *     summary: Crea un nuevo usuario
+ *     description: Crea un nuevo usuario en el sistema.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               correo:
+ *                 type: string
+ *               contrasena:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuario creado correctamente
+ *       400:
+ *         description: Error en la solicitud
+ *       409:
+ *         description: Usuario con el email ya existe
+ */
 router.post("/", async (req, res) => {
     try {
         const { error } = validate(req.body);

@@ -2,10 +2,8 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
-
-
-// Importar configuración de Swagger
-const swaggerDocs = require('./swagger');
+const swaggerSpec = require('./swagger'); // Importar Swagger
+const swaggerUi = require('swagger-ui-express');
 
 // Conectar a la base de datos
 connectDB();
@@ -23,8 +21,8 @@ app.use('/api/usuarios', require('./routes/usuario'));
 app.use('/api/carrito', require('./routes/carrito'));
 app.use('/api/ordenes', require('./routes/orden'));*/
 
-// Configurar Swagger
-swaggerDocs(app);
+// Rutas de Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
