@@ -3,6 +3,10 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
 
+
+// Importar configuración de Swagger
+const swaggerDocs = require('./swagger');
+
 // Conectar a la base de datos
 connectDB();
 
@@ -18,6 +22,9 @@ app.use('/api/usuarios', require('./routes/usuario'));
 /*app.use('/api/productos', require('./routes/producto'));
 app.use('/api/carrito', require('./routes/carrito'));
 app.use('/api/ordenes', require('./routes/orden'));*/
+
+// Configurar Swagger
+swaggerDocs(app);
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
