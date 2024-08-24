@@ -16,7 +16,7 @@ const swaggerSpec = swaggerJsdoc({
       }
     ],
   },
-  apis: ['./routes/usuario.js'], // Asegúrate de que esta ruta sea correcta
+  apis: ['./routes/*.js'], // Asegúrate de que esta ruta sea correcta
 });
 
 module.exports = swaggerSpec;

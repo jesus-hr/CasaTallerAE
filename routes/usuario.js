@@ -15,11 +15,19 @@ const bcryptjs = require("bcryptjs");
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
+ *               cedula:
+ *                 type: string
+ *               nombrenombreCompleto:
+ *                 type: string
+ *               direccion:
  *                 type: string
  *               correo:
  *                 type: string
  *               contrasena:
+ *                 type: string
+ *               celular:
+ *                 type: string
+ *               rol: 
  *                 type: string
  *     responses:
  *       201:
