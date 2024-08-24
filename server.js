@@ -20,5 +20,5 @@ app.use('/api/carrito', require('./routes/carrito'));
 app.use('/api/ordenes', require('./routes/orden'));*/
 
 // Configurar el puerto y escuchar
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));
