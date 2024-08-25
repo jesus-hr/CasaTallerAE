@@ -17,7 +17,7 @@ const bcryptjs = require("bcryptjs");
  *             properties:
  *               cedula:
  *                 type: string
- *               nombrenombreCompleto:
+ *               nombreCompleto:
  *                 type: string
  *               direccion:
  *                 type: string
