@@ -3,8 +3,8 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
 const { swaggerSpec, swaggerUi } = require('./swagger');
-const path = require('path');
-const basicAuth = require('express-basic-auth');
+//const path = require('path');
+//const basicAuth = require('express-basic-auth');
 
 // Conectar a la base de datos
 connectDB();
@@ -18,7 +18,7 @@ app.use(express.json({ extended: false }));
 // Rutas
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
-//app.use('/api/productos', require('./routes/producto'));
+app.use('/api/productos', require('./routes/producto'));
 
 // Middleware para autenticar cada solicitud a Swagger
 const requireAuth = (req, res, next) => {
@@ -52,7 +52,7 @@ app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
 });
 
 // Servir Swagger UI estático
-app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+//app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
