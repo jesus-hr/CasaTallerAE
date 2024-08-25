@@ -2,8 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
-const swaggerSpec = require('./swagger'); // Asegúrate de que esta ruta es correcta
-const swaggerUi = require('swagger-ui-express');
+const { swaggerSpec, swaggerUi } = require('./swagger');
 
 // Conectar a la base de datos
 connectDB();
@@ -17,10 +16,16 @@ app.use(express.json({ extended: false }));
 // Rutas
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
-// Otras rutas...
+// Agrega aquí otras rutas
 
 // Rutas de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Servir swagger.json
+app.get('/api-docs/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;

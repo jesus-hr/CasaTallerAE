@@ -1,6 +1,6 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
-// Configuración de Swagger
 const swaggerSpec = swaggerJsdoc({
   definition: {
     openapi: '3.0.0',
@@ -13,4 +13,8 @@ const swaggerSpec = swaggerJsdoc({
   apis: ['./routes/*.js'], // Asegúrate de que esta ruta sea correcta
 });
 
-module.exports = swaggerSpec;
+// Exportar la especificación y el middleware
+module.exports = {
+  swaggerSpec,
+  swaggerUi
+};
