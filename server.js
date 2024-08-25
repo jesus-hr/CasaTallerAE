@@ -21,13 +21,15 @@ app.use('/api/usuarios', require('./routes/usuario'));
 
 // Rutas de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 // Servir swagger.json
 app.get('/api-docs/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
+
+// Servir Swagger UI estático
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
