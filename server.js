@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const { swaggerSpec, swaggerUi } = require('./swagger');
 const path = require('path');
+const basicAuth = require('express-basic-auth');
 
 // Conectar a la base de datos
 connectDB();
@@ -17,7 +18,14 @@ app.use(express.json({ extended: false }));
 // Rutas
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
-// Agrega aquí otras rutas
+//app.use('/api/productos', require('./routes/producto'));
+
+// Autenticación básica para Swagger
+app.use('/api-docs', basicAuth({
+  users: { [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD }, // Cambia estos valores por tu usuario y contraseña
+  challenge: true,
+  unauthorizedResponse: 'Unauthorized'
+}), swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Rutas de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
