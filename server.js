@@ -32,7 +32,7 @@ const requireAuth = (req, res, next) => {
   if (user === process.env.SWAGGER_USER && password === process.env.SWAGGER_PASSWORD) {
     return next();
   }
-  return res.status(403).send('Forbidden');
+  return res.status(403).send('Error de autenticación');
 };
 
 // Autenticación básica para Swagger
