@@ -20,18 +20,33 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
 //app.use('/api/productos', require('./routes/producto'));
 
+// Middleware para autenticar cada solicitud a Swagger
+const requireAuth = (req, res, next) => {
+  if (!req.headers.authorization || !req.headers.authorization.startsWith('Basic ')) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="Swagger API Documentation"');
+    return res.status(401).send('Authentication required.');
+  }
+  const auth = Buffer.from(req.headers.authorization.split(' ')[1], 'base64').toString().split(':');
+  const user = auth[0];
+  const password = auth[1];
+  if (user === process.env.SWAGGER_USER && password === process.env.SWAGGER_PASSWORD) {
+    return next();
+  }
+  return res.status(403).send('Forbidden');
+};
+
 // Autenticación básica para Swagger
-app.use('/api-docs', basicAuth({
+/*app.use('/api-docs', basicAuth({
   users: { [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD }, // Cambia estos valores por tu usuario y contraseña
   challenge: true,
   unauthorizedResponse: 'Unauthorized'
-}), swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}), swaggerUi.serve, swaggerUi.setup(swaggerSpec));*/
 
 // Rutas de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Servir swagger.json
-app.get('/api-docs/swagger.json', (req, res) => {
+app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
