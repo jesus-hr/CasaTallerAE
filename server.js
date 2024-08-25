@@ -3,7 +3,7 @@ const connectDB = require('./config/db');
 const cors = require('cors');
 require('dotenv').config();
 const { swaggerSpec, swaggerUi } = require('./swagger');
-//const path = require('path');
+const path = require('path');
 //const basicAuth = require('express-basic-auth');
 
 // Conectar a la base de datos
@@ -52,7 +52,7 @@ app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
 });
 
 // Servir Swagger UI estático
-//app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
