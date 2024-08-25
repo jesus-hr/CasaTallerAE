@@ -43,7 +43,7 @@ const requireAuth = (req, res, next) => {
 }), swaggerUi.serve, swaggerUi.setup(swaggerSpec));*/
 
 // Rutas de Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Servir swagger.json
 app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
