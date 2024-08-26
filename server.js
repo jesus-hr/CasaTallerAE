@@ -24,7 +24,7 @@ const requireAuth = (req, res, next) => {
   const auth = Buffer.from(req.headers.authorization.split(' ')[1], 'base64').toString().split(':');
   const user = auth[0];
   const password = auth[1];
-  if (user === /* "loquiero" */process.env.SWAGGER_USER && password === /* "@lotengo304." */process.env.SWAGGER_PASSWORD) {
+  if (user === "loquiero"/* process.env.SWAGGER_USER */ && password === "@lotengo304."/* process.env.SWAGGER_PASSWORD */) {
     return next();
   }
   return res.status(403).send('Error de autenticación');
@@ -43,8 +43,10 @@ app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 if(app.use('/api', requireAuth)){
   app.get('/api', requireAuth, (req, res) => {
     res.setHeader('Content-Type', 'application/json');
+    res.end();
   });
 }
+
 // Servir swagger.json
 app.get('/api-docs', requireAuth, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
