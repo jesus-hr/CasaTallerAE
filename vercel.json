@@ -18,6 +18,10 @@
     {
       "src": "/(.*)",
       "dest": "/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     }
   ]
 }
