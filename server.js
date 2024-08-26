@@ -15,11 +15,6 @@ const app = express();
 app.use(cors());
 app.use(express.json({ extended: false }));
 
-// Rutas
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/usuarios', require('./routes/usuario'));
-app.use('/api/productos', require('./routes/producto'));
-
 // Middleware para autenticar cada solicitud a Swagger
 const requireAuth = (req, res, next) => {
   if (!req.headers.authorization || !req.headers.authorization.startsWith('Basic ')) {
@@ -43,16 +38,21 @@ const requireAuth = (req, res, next) => {
 }), swaggerUi.serve, swaggerUi.setup(swaggerSpec));*/
 
 // Rutas de Swagger
-app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Servir swagger.json
-app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
+app.get('/api', requireAuth, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
 
 // Servir Swagger UI estático
 app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
+
+// Rutas
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/usuarios', require('./routes/usuario'));
+app.use('/api/productos', require('./routes/producto'));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
