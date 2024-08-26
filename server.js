@@ -32,6 +32,13 @@ const requireAuth = (req, res, next) => {
 // Autenticación básica para Swagger
 app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+if (app.use('/api', requireAuth)) {
+  app.get('/api', requireAuth, (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send();
+  });
+}
+
 // Servir swagger.json
 app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
