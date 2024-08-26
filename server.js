@@ -38,20 +38,20 @@ const requireAuth = (req, res, next) => {
 }), swaggerUi.serve, swaggerUi.setup(swaggerSpec));*/
 
 // Rutas de Swagger
-app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
-if(app.use('/api', requireAuth)){
+if (app.use('/api', requireAuth)) {
   app.get('/api', requireAuth, (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-    res.end();
+    res.send();
+  });
+} else if(app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec))) {  
+  // Servir swagger.json
+  app.get('/api-docs', requireAuth, (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(swaggerSpec);
   });
 }
-
-// Servir swagger.json
-app.get('/api-docs', requireAuth, (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
 
 // Servir Swagger UI estático
 app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger-ui-dist')));
