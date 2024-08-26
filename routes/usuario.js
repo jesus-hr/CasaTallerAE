@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { Usuario, validate } = require("../models/usuario");
 const bcryptjs = require("bcryptjs");
+const asyncHandler = require("../middleware/asyncHandler");
 
 /**
  * @swagger
@@ -58,5 +59,52 @@ router.post("/", async (req, res) => {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
+
+/**
+ * @swagger
+ * /api/usuarios:
+ *   get:
+ *     summary: Obtiene todos los usuarios
+ *     description: Obtiene una lista de todos los usuarios en el sistema.
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: El ID del usuario
+ *                   cedula:
+ *                     type: string
+ *                     description: La cédula del usuario
+ *                   nombreCompleto:
+ *                     type: string
+ *                     description: El nombre completo del usuario
+ *                   direccion:
+ *                     type: string
+ *                     description: La dirección del usuario
+ *                   correo:
+ *                     type: string
+ *                     description: El correo electrónico del usuario
+ *                   celular:
+ *                     type: string
+ *                     description: El número de celular del usuario
+ *                   rol:
+ *                     type: string
+ *                     description: El rol del usuario (cliente o admin)
+ *       500:
+ *         description: Error en el servidor
+ */
+router.get("/",
+    asyncHandler(async (req,res)=>{
+        const usuario = await Usuario.find();
+        res.send(usuario);
+    })
+)
 
 module.exports = router;
