@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json({ extended: false }));
 
 // Middleware para autenticar cada solicitud a Swagger
-const requireAuth = (req, res, next) => {
+/* const requireAuth = (req, res, next) => {
   if (!req.headers.authorization || !req.headers.authorization.startsWith('Basic ')) {
     res.setHeader('WWW-Authenticate', 'Basic realm="Swagger API"');
     return res.status(401).send('Autenticacion requerida.');
@@ -23,21 +23,21 @@ const requireAuth = (req, res, next) => {
   const auth = Buffer.from(req.headers.authorization.split(' ')[1], 'base64').toString().split(':');
   const user = auth[0];
   const password = auth[1];
-  if (user === /* "loquiero" */process.env.SWAGGER_USER && password === /* "@lotengo304." */process.env.SWAGGER_PASSWORD) {
+  if (user === "loquiero",process.env.SWAGGER_USER && password === "@lotengo304.", process.env.SWAGGER_PASSWORD) {
     return next();
   }
   return res.status(403).send('Autenticacion fallida');
-};
+}; */
 
 // Autenticación básica para Swagger
 app.use('/api-docs', /* requireAuth, */ swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-if (app.use('/api', requireAuth)) {
+/* if (app.use('/api', requireAuth)) {
   app.get('/api', requireAuth, (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send();
   });
-}
+} */
 
 // Servir swagger.json
 app.get('/api-docs/swagger.json', /* requireAuth, */ (req, res) => {
