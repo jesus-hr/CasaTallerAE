@@ -23,14 +23,14 @@ const requireAuth = (req, res, next) => {
   const auth = Buffer.from(req.headers.authorization.split(' ')[1], 'base64').toString().split(':');
   const user = auth[0];
   const password = auth[1];
-  if (user === process.env.SWAGGER_USER && password === process.env.SWAGGER_PASSWORD) {
+  if (user === /* "loquiero" */process.env.SWAGGER_USER && password === /* "@lotengo304." */process.env.SWAGGER_PASSWORD) {
     return next();
   }
   return res.status(403).send('Autenticacion fallida');
 };
 
 // Autenticación básica para Swagger
-app.use('/api-docs', requireAuth, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', /* requireAuth, */ swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 if (app.use('/api', requireAuth)) {
   app.get('/api', requireAuth, (req, res) => {
@@ -40,7 +40,7 @@ if (app.use('/api', requireAuth)) {
 }
 
 // Servir swagger.json
-app.get('/api-docs/swagger.json', requireAuth, (req, res) => {
+app.get('/api-docs/swagger.json', /* requireAuth, */ (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerSpec);
 });
@@ -52,6 +52,7 @@ app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
 app.use('/api/productos', require('./routes/producto'));
+app.use('/api/auth', require('./routes/auth'));
 
 // Configurar el puerto y escuchar
 const PORT = process.env.PORT || 3000;
