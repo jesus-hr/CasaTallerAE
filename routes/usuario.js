@@ -2,6 +2,8 @@ const router = require("express").Router();
 const { Usuario, validate } = require("../models/usuario");
 const bcryptjs = require("bcryptjs");
 const asyncHandler = require("../middleware/asyncHandler");
+const isValideObject = require("../middleware/isValideObject");
+const validador = require("../middleware/validate");
 
 /**
  * @swagger
@@ -104,6 +106,93 @@ router.get("/",
     asyncHandler(async (req,res)=>{
         const usuario = await Usuario.find();
         res.send(usuario);
+    })
+)
+
+/**
+ * @swagger
+ * /api/usuarios/{cedula}:
+ *   put:
+ *     summary: Actualiza un usuario existente
+ *     description: Actualiza los detalles de un usuario en el sistema utilizando la cédula como identificador.
+ *     parameters:
+ *       - in: path
+ *         name: cedula
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: La cédula del usuario que se desea actualizar.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               cedula:
+ *                 type: string
+ *               nombreCompleto:
+ *                 type: string
+ *               direccion:
+ *                 type: string
+ *               correo:
+ *                 type: string
+ *               contrasena:
+ *                 type: string
+ *               celular:
+ *                 type: string
+ *               rol: 
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: El ID del usuario
+ *                     cedula:
+ *                       type: string
+ *                       description: La cédula del usuario
+ *                     nombreCompleto:
+ *                       type: string
+ *                       description: El nombre completo del usuario
+ *                     direccion:
+ *                       type: string
+ *                       description: La dirección del usuario
+ *                     correo:
+ *                       type: string
+ *                       description: El correo electrónico del usuario
+ *                     celular:
+ *                       type: string
+ *                       description: El número de celular del usuario
+ *                     rol:
+ *                       type: string
+ *                       description: El rol del usuario (cliente o admin)
+ *       400:
+ *         description: Error en la solicitud
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error en el servidor
+ */
+router.put("/:cedula",
+    [isValideObject, validador(validate)],
+    asyncHandler(async (req,res)=>{
+        const usuarioEditado = await Usuario.findOneAndUpdate({cedula: req.params.cedula}, req.body);
+        if(!usuarioEditado){
+            return res.status(404).send({ message: "Usuario no encontrado" });
+        }else{
+            res.status(200).send({ message: "Usuario editado", data: usuarioEditado });
+        }        
     })
 )
 

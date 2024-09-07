@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 //const jwt = require("jsonwebtoken");
 const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
+//const passwordComplexity = require("joi-password-complexity");
 
 const userSchema = new mongoose.Schema({
     cedula : { type: String, required: true },
@@ -27,8 +27,8 @@ const validate = (data) => {
         cedula: Joi.string().required().label("Cedula"),
 		nombreCompleto: Joi.string().required().label("Nombre Completo"),
 		direccion: Joi.string().required().label("Direccion"),		
-		correo: Joi.string().email().required().label("Correo"),
-		contrasena: passwordComplexity().required().label("Clave"),
+		correo: Joi.string().required().label("Correo"),
+		contrasena: Joi.string().required().label("Clave"),
         celular: Joi.string().required().label("Celular"),
         rol: Joi.string().required().label("Rol"),
 	});
