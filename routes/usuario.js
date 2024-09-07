@@ -196,4 +196,39 @@ router.put("/:cedula",
     })
 )
 
+/**
+ * @swagger
+ * /api/usuarios/{cedula}:
+ *   delete:
+ *     summary: Elimina un usuario por cédula
+ *     description: Elimina un usuario de la base de datos usando la cédula proporcionada.
+ *     parameters:
+ *       - in: path
+ *         name: cedula
+ *         required: true
+ *         description: La cédula del usuario a eliminar.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado exitosamente.
+ *       404:
+ *         description: Usuario no encontrado con la cédula proporcionada.
+ *       400:
+ *         description: Cédula inválida.
+ *     tags:
+ *       - Usuarios
+ */
+router.delete("/:cedula",
+    asyncHandler(async (req, res) => {
+        const { cedula } = req.params;
+        const user = await Usuario.findOne({ cedula });
+        if (!user) {
+            return res.status(404).send("Usuario no encontrado");
+        }
+        await Usuario.findOneAndDelete({ cedula });
+        return res.status(200).send("Usuario eliminado");
+    })
+);
+
 module.exports = router;
