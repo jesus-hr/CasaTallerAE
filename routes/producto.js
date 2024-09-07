@@ -36,6 +36,9 @@ const asyncHandler = require("../middleware/asyncHandler");
  *         description: Error en la solicitud
  *       409:
  *         description: Usuario con el email ya existe
+ * 
+ *     tags:
+ *       - Producto
  */
 router.post("/",
     validator(validate),

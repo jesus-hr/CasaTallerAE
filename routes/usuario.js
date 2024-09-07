@@ -39,6 +39,8 @@ const validador = require("../middleware/validate");
  *         description: Error en la solicitud
  *       409:
  *         description: Usuario con el email ya existe
+ *     tags:
+ *       - Usuarios
  */
 router.post("/", async (req, res) => {
     try {
@@ -101,6 +103,9 @@ router.post("/", async (req, res) => {
  *                     description: El rol del usuario (cliente o admin)
  *       500:
  *         description: Error en el servidor
+ * 
+ *     tags:
+ *       - Usuarios
  */
 router.get("/",
     asyncHandler(async (req,res)=>{
@@ -183,6 +188,9 @@ router.get("/",
  *         description: Usuario no encontrado
  *       500:
  *         description: Error en el servidor
+ * 
+ *     tags:
+ *       - Usuarios
  */
 router.put("/:cedula",
     [isValideObject, validador(validate)],
@@ -216,6 +224,7 @@ router.put("/:cedula",
  *         description: Usuario no encontrado con la cédula proporcionada.
  *       400:
  *         description: Cédula inválida.
+ * 
  *     tags:
  *       - Usuarios
  */

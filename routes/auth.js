@@ -70,6 +70,9 @@ const Joi = require("joi");
  *                 message:
  *                   type: string
  *                   description: Mensaje de error.
+ * 
+ *     tags:
+ *       - UsuariosAuth
  */
 router.post("/",
 	async (req, res) => {
