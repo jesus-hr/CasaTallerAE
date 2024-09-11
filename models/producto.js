@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
 	descripcion: { type: String, required: true },
 	precio: { type: String, required: true },
 	foto: { type: String, required: true },
-	cantidad: { type: Number, default:0 }
+	cantidad: { type: Number, default:0 },
+	categoria: { type: String, required: true}
 });
 
 const Producto = mongoose.model("producto", userSchema);
@@ -19,7 +20,8 @@ const validate = (data) => {
         descripcion: Joi.string().required().label("Descripcion"),
         precio: Joi.string().required().label("Precio"),
         foto: Joi.string().required().label("Foto"),
-		cantidad: Joi.number().required().label("Cantidad")
+		cantidad: Joi.number().required().label("Cantidad"),
+		categoria: Joi.string().required().label("Categoria")
 	});
 	return schema.validate(data);
 };

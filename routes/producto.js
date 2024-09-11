@@ -29,13 +29,15 @@ const asyncHandler = require("../middleware/asyncHandler");
  *                 type: string
  *               cantidad:
  *                 type: number
+ *               categoria:
+ *                 type: string
  *     responses:
  *       201:
- *         description: Usuario creado correctamente
+ *         description: Producto creado correctamente
  *       400:
  *         description: Error en la solicitud
  *       409:
- *         description: Usuario con el email ya existe
+ *         description: Producto ya existe
  * 
  *     tags:
  *       - Producto
@@ -49,7 +51,8 @@ router.post("/",
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             precio: req.body.precio,
-            foto: req.body.foto
+            foto: req.body.foto,
+            categoria: req.body.categoria
         });
 
         if(productoExiste){
