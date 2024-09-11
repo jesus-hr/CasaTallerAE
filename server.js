@@ -52,7 +52,7 @@ app.use('/swagger-ui', express.static(path.join(__dirname, 'node_modules/swagger
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/usuarios', require('./routes/usuario'));
 app.use('/api/productos', require('./routes/producto'));
-app.use('/api/productos/categoria', require('./routes/producto'));
+// app.use('/api/productos/categoria', require('./routes/producto'));
 app.use('/api/auth', require('./routes/auth'));
 
 // Configurar el puerto y escuchar

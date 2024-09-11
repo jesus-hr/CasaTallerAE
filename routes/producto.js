@@ -183,7 +183,7 @@ router.get("/:idProducto",
     })
 )
 
-/**
+/*
  * @swagger
  * /productos/categoria/{categoria}:
  *   get:
@@ -236,7 +236,7 @@ router.get("/:idProducto",
  *     tags:
  *          - Producto
  */
-router.get("/categoria/:categoria",
+/* router.get("/categoria/:categoria",
     asyncHandler(async (req, res) => {
         const productoPorCategoria = await Producto.find({ categoria: req.params.categoria }, req.body);
         if (!productoPorCategoria) {
@@ -245,6 +245,6 @@ router.get("/categoria/:categoria",
             res.send(productoPorCategoria);
         }
     })
-)
+) */
 
 module.exports = router;
