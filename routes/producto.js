@@ -247,4 +247,39 @@ router.get("/:idProducto",
     })
 ) */
 
+/**
+ * @swagger
+ * /api/productos/{idProducto}:
+ *   delete:
+ *     summary: Eliminar un producto por ID
+ *     description: Elimina un producto específico basado en su identificador único.
+ *     parameters:
+ *       - in: path
+ *         name: idProducto
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: El identificador único del producto que se desea eliminar.
+ *     responses:
+ *       200:
+ *         description: Producto eliminado exitosamente
+ *       404:
+ *         description: Producto no encontrado
+ *       500:
+ *         description: Error en el servidor
+ * 
+ *     tags:
+ *          - Producto
+ */
+router.delete("/:idProducto",
+    asyncHandler(async (req, res) => {
+        const { idProducto } = req.params;
+        const producto = await Producto.findOne({ idProducto });
+        if (!producto) {
+            return res.status(404).send("Producto no encontrado");
+        }
+        await Producto.findOneAndDelete({ idProducto });
+        return res.status(200).send("Producto eliminado");
+    })
+)
 module.exports = router;
