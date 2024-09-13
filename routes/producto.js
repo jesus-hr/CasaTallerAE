@@ -250,6 +250,112 @@ router.get("/:idProducto",
 /**
  * @swagger
  * /api/productos/{idProducto}:
+ *   put:
+ *     summary: Edita un producto existente por su idProducto.    
+ *     parameters:
+ *       - name: idProducto
+ *         in: path
+ *         required: true
+ *         description: ID del producto a editar
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               idProducto:
+ *                 type: string
+ *               nombre:
+ *                 type: string
+ *               descripcion:
+ *                 type: string
+ *               precio:
+ *                 type: string
+ *               foto:
+ *                 type: string
+ *               cantidad:
+ *                 type: number
+ *                 default: 0
+ *               categoria:
+ *                 type: string
+ *             example:
+ *               idProducto: "12345"
+ *               nombre: "Producto editado"
+ *               descripcion: "Nueva descripción"
+ *               precio: "100.00"
+ *               foto: "https://ejemplo.com/foto.jpg"
+ *               cantidad: 10
+ *               categoria: "Electrónica"
+ *     responses:
+ *       200:
+ *         description: Producto editado con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     idProducto:
+ *                       type: string
+ *                     nombre:
+ *                       type: string
+ *                     descripcion:
+ *                       type: string
+ *                     precio:
+ *                       type: string
+ *                     foto:
+ *                       type: string
+ *                     cantidad:
+ *                       type: number
+ *                     categoria:
+ *                       type: string
+ *               example:
+ *                 message: "Producto editado"
+ *                 data:
+ *                   idProducto: "12345"
+ *                   nombre: "Producto editado"
+ *                   descripcion: "Nueva descripción"
+ *                   precio: "100.00"
+ *                   foto: "https://ejemplo.com/foto.jpg"
+ *                   cantidad: 10
+ *                   categoria: "Electrónica"
+ *       404:
+ *         description: Producto no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *               example:
+ *                 message: "Producto no encontrado"
+ * 
+ *     tags:
+ *          - Producto
+ */
+router.put("/:idProducto",
+    asyncHandler(async (req, res) => {
+        const productoEditado = await Producto.findOneAndUpdate({ idProducto: req.params.idProducto }, req.body);
+        if (!productoEditado) {
+            return res.status(404).send({ message: "Producto no encontrado" });
+        } else {
+            res.status(200).send({ message: "Producto editado", data: productoEditado });
+        }
+    })
+)
+
+
+/**
+ * @swagger
+ * /api/productos/{idProducto}:
  *   delete:
  *     summary: Eliminar un producto por ID
  *     description: Elimina un producto específico basado en su identificador único.
